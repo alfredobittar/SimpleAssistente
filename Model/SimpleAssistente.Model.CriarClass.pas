@@ -21,6 +21,11 @@ type
     FNomeUnit: String;
     FNomeClass: String;
 
+    function SeteProcedureDeclaration(aValue: TProperty): iModelClass;
+    function SetProcedureImplementation(aValue: TProperty): iModelClass;
+    function SeteFunctionDeclaration(aValue: TProperty): iModelClass;
+    function SetFunctionImplementation(aValue: TProperty): iModelClass;
+
   public
     class function New: iModelClass;
     constructor Create;
@@ -29,8 +34,7 @@ type
     function SetNomeUnit(aValue: String): iModelClass;
     function SetNomeClass(aValue: String): iModelClass;
     function SetCampos(aValue: TProperty): iModelClass;
-    function SeteProcedureDeclaration(aValue: TProperty): iModelClass;
-    function SetProcedureImplementation(aValue: TProperty): iModelClass;
+
     function CriarClass: iModelClass;
     function MontarClass: iModelClass;
 
@@ -151,7 +155,6 @@ begin
   for i := 0 to pred(FProceduresImplementation.Count) do
   begin
     Writeln(FClass, FProceduresImplementation[i]);
-    Writeln(FClass, '');
   end;
   // pronto ate aqui
   Writeln(FClass, 'function TCAIXA.GetFDATAABERTURA: TDateTime;');
@@ -221,6 +224,9 @@ begin
   SeteProcedureDeclaration(aValue);
   SetProcedureImplementation(aValue);
 
+  SeteFunctionDeclaration(aValue);
+  SetFunctionImplementation(aValue);
+
   AutoIncPK := aValue.PK;
 
   if Trim(aValue.AutoInc) <> '' then
@@ -232,7 +238,7 @@ begin
   if Trim(AutoIncPK) <> '' then
     FProperty.Add('[' + AutoIncPK + ']');
 
-  FProperty.Add('property ' + aValue.Nome + ' : ' + aValue.Tipo + ' read GetF' + aValue.Nome +
+  FProperty.Add('property ' + aValue.Nome + ': ' + aValue.Tipo + ' read GetF' + aValue.Nome +
     ' write Set' + aValue.Nome + ';');
 end;
 
@@ -254,11 +260,19 @@ begin
   FProceduresImplementation.Add('begin');
   FProceduresImplementation.Add('  F' + aValue.Nome + ' := Value;');
   FProceduresImplementation.Add('end;');
+  FProceduresImplementation.Add('');
+end;
 
-  { procedure TCAIXA.SetVALORFECHAMENTO(const Value: Double);
-    begin
-    FVALORFECHAMENTO := Value;
-    end; }
+function TModelCriarClass.SeteFunctionDeclaration(aValue: TProperty): iModelClass;
+begin
+  Result := Self;
+  FFunctionsDeclaration.Add('function GetF' + aValue.Nome + ': ' + aValue.Tipo + ';');
+  // function GetFDATAABERTURA: TDateTime;
+end;
+
+function TModelCriarClass.SetFunctionImplementation(aValue: TProperty): iModelClass;
+begin
+  hffjh
 end;
 
 function TModelCriarClass.SetNomeClass(aValue: String): iModelClass;

@@ -60,42 +60,52 @@ procedure TCAIXA.SetFISCAL_FECHAMENTO(const Value: String);
 begin
   FFISCAL_FECHAMENTO := Value;
 end;
+
 procedure TCAIXA.SetOPERADOR(const Value: String);
 begin
   FOPERADOR := Value;
 end;
+
 procedure TCAIXA.SetVALORABERTURA(const Value: Double);
 begin
   FVALORABERTURA := Value;
 end;
+
 procedure TCAIXA.SetDATAABERTURA(const Value: TDateTime);
 begin
   FDATAABERTURA := Value;
 end;
+
 procedure TCAIXA.SetGUUID(const Value: String);
 begin
   FGUUID := Value;
 end;
+
 procedure TCAIXA.SetDATAALTERACAO(const Value: TDateTime);
 begin
   FDATAALTERACAO := Value;
 end;
+
 procedure TCAIXA.SetFISCAL_ABERTURA(const Value: String);
 begin
   FFISCAL_ABERTURA := Value;
 end;
+
 procedure TCAIXA.SetSTATUS(const Value: Integer);
 begin
   FSTATUS := Value;
 end;
+
 procedure TCAIXA.SetVALORFECHAMENTO(const Value: Double);
 begin
   FVALORFECHAMENTO := Value;
 end;
+
 procedure TCAIXA.SetDATAFECHAMENTO(const Value: TDateTime);
 begin
   FDATAFECHAMENTO := Value;
 end;
+
 function TCAIXA.GetFDATAABERTURA: TDateTime;
 begin
 
