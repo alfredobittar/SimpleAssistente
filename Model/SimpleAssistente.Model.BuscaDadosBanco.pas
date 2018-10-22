@@ -56,8 +56,10 @@ begin
   Result := Self;
 
   FTable := aTabela;
-
+  /// ///////////////////////////////////////////////////////  isso não é aqui
   FCriaClass.SetNomeUnit('Teste');
+  FCriaClass.SetNameValidation('');
+
   FCriaClass.SetNomeClass(FTable);
 
   SetFields;

@@ -30,22 +30,32 @@ Type
     procedure SetSTATUS(const Value: Integer);
     procedure SetVALORFECHAMENTO(const Value: Double);
     procedure SetDATAFECHAMENTO(const Value: TDateTime);
+    function GetFFISCAL_FECHAMENTO: String;
+    function GetFOPERADOR: String;
+    function GetFVALORABERTURA: Double;
+    function GetFDATAABERTURA: TDateTime;
+    function GetFGUUID: String;
+    function GetFDATAALTERACAO: TDateTime;
+    function GetFFISCAL_ABERTURA: String;
+    function GetFSTATUS: Integer;
+    function GetFVALORFECHAMENTO: Double;
+    function GetFDATAFECHAMENTO: TDateTime;
 
   published
     { published declarations }
-    property FISCAL_FECHAMENTO : String read GetFFISCAL_FECHAMENTO write SetFISCAL_FECHAMENTO;
-    property OPERADOR : String read GetFOPERADOR write SetOPERADOR;
-    property VALORABERTURA : Double read GetFVALORABERTURA write SetVALORABERTURA;
+    property FISCAL_FECHAMENTO: String read GetFFISCAL_FECHAMENTO write SetFISCAL_FECHAMENTO;
+    property OPERADOR: String read GetFOPERADOR write SetOPERADOR;
+    property VALORABERTURA: Double read GetFVALORABERTURA write SetVALORABERTURA;
     [PK]
-    property DATAABERTURA : TDateTime read GetFDATAABERTURA write SetDATAABERTURA;
+    property DATAABERTURA: TDateTime read GetFDATAABERTURA write SetDATAABERTURA;
     [PK]
-    property GUUID : String read GetFGUUID write SetGUUID;
-    property DATAALTERACAO : TDateTime read GetFDATAALTERACAO write SetDATAALTERACAO;
-    property FISCAL_ABERTURA : String read GetFFISCAL_ABERTURA write SetFISCAL_ABERTURA;
+    property GUUID: String read GetFGUUID write SetGUUID;
+    property DATAALTERACAO: TDateTime read GetFDATAALTERACAO write SetDATAALTERACAO;
+    property FISCAL_ABERTURA: String read GetFFISCAL_ABERTURA write SetFISCAL_ABERTURA;
     [PK]
-    property STATUS : Integer read GetFSTATUS write SetSTATUS;
-    property VALORFECHAMENTO : Double read GetFVALORFECHAMENTO write SetVALORFECHAMENTO;
-    property DATAFECHAMENTO : TDateTime read GetFDATAFECHAMENTO write SetDATAFECHAMENTO;
+    property STATUS: Integer read GetFSTATUS write SetSTATUS;
+    property VALORFECHAMENTO: Double read GetFVALORFECHAMENTO write SetVALORFECHAMENTO;
+    property DATAFECHAMENTO: TDateTime read GetFDATAFECHAMENTO write SetDATAFECHAMENTO;
 
   public
     { Public declarations }
@@ -106,54 +116,84 @@ begin
   FDATAFECHAMENTO := Value;
 end;
 
-function TCAIXA.GetFDATAABERTURA: TDateTime;
-begin
-
-end;
-
-function TCAIXA.GetFDATAALTERACAO: TDateTime;
-begin
-
-end;
-
-function TCAIXA.GetFDATAFECHAMENTO: TDateTime;
-begin
-
-end;
-
-function TCAIXA.GetFFISCAL_ABERTURA: String;
-begin
-
-end;
-
 function TCAIXA.GetFFISCAL_FECHAMENTO: String;
 begin
+  if aValue.Nome = '' then
+    raise TValidaCampo.Create(FISCAL_FECHAMENTO,'O campo FISCAL_FECHAMENTO não pode ser vazio!');
 
-end;
-
-function TCAIXA.GetFGUUID: String;
-begin
-
+  Result := FFISCAL_FECHAMENTO;
 end;
 
 function TCAIXA.GetFOPERADOR: String;
 begin
+  if aValue.Nome = '' then
+    raise TValidaCampo.Create(OPERADOR,'O campo OPERADOR não pode ser vazio!');
 
-end;
-
-function TCAIXA.GetFSTATUS: Integer;
-begin
-
+  Result := FOPERADOR;
 end;
 
 function TCAIXA.GetFVALORABERTURA: Double;
 begin
+  if aValue.Nome = '' then
+    raise TValidaCampo.Create(VALORABERTURA,'O campo VALORABERTURA não pode ser vazio!');
 
+  Result := FVALORABERTURA;
+end;
+
+function TCAIXA.GetFDATAABERTURA: TDateTime;
+begin
+  if aValue.Nome = '' then
+    raise TValidaCampo.Create(DATAABERTURA,'O campo DATAABERTURA não pode ser vazio!');
+
+  Result := FDATAABERTURA;
+end;
+
+function TCAIXA.GetFGUUID: String;
+begin
+  if aValue.Nome = '' then
+    raise TValidaCampo.Create(GUUID,'O campo GUUID não pode ser vazio!');
+
+  Result := FGUUID;
+end;
+
+function TCAIXA.GetFDATAALTERACAO: TDateTime;
+begin
+  if aValue.Nome = '' then
+    raise TValidaCampo.Create(DATAALTERACAO,'O campo DATAALTERACAO não pode ser vazio!');
+
+  Result := FDATAALTERACAO;
+end;
+
+function TCAIXA.GetFFISCAL_ABERTURA: String;
+begin
+  if aValue.Nome = '' then
+    raise TValidaCampo.Create(FISCAL_ABERTURA,'O campo FISCAL_ABERTURA não pode ser vazio!');
+
+  Result := FFISCAL_ABERTURA;
+end;
+
+function TCAIXA.GetFSTATUS: Integer;
+begin
+  if aValue.Nome = '' then
+    raise TValidaCampo.Create(STATUS,'O campo STATUS não pode ser vazio!');
+
+  Result := FSTATUS;
 end;
 
 function TCAIXA.GetFVALORFECHAMENTO: Double;
 begin
+  if aValue.Nome = '' then
+    raise TValidaCampo.Create(VALORFECHAMENTO,'O campo VALORFECHAMENTO não pode ser vazio!');
 
+  Result := FVALORFECHAMENTO;
+end;
+
+function TCAIXA.GetFDATAFECHAMENTO: TDateTime;
+begin
+  if aValue.Nome = '' then
+    raise TValidaCampo.Create(DATAFECHAMENTO,'O campo DATAFECHAMENTO não pode ser vazio!');
+
+  Result := FDATAFECHAMENTO;
 end;
 
 end.

@@ -11,20 +11,22 @@ type
 
   private
     FClass: TextFile;
-    FCaminho: string;
+    FDirectory: string;
     FFields: TList<String>;
     FProceduresDeclaration: TList<String>;
     FFunctionsDeclaration: TList<String>;
     FProceduresImplementation: TList<String>;
     FFunctionsImplementation: TList<String>;
     FProperty: TList<String>;
-    FNomeUnit: String;
-    FNomeClass: String;
+    FNameUnit: String;
+    FNameClass: String;
+    FNameValidation: String;
 
     function SeteProcedureDeclaration(aValue: TProperty): iModelClass;
     function SetProcedureImplementation(aValue: TProperty): iModelClass;
     function SeteFunctionDeclaration(aValue: TProperty): iModelClass;
     function SetFunctionImplementation(aValue: TProperty): iModelClass;
+    function SetFunctionImplementationValidation(aValue: TProperty): iModelClass;
 
   public
     class function New: iModelClass;
@@ -33,6 +35,7 @@ type
 
     function SetNomeUnit(aValue: String): iModelClass;
     function SetNomeClass(aValue: String): iModelClass;
+    function SetNameValidation(aValue: String): iModelClass;
     function SetCampos(aValue: TProperty): iModelClass;
 
     function CriarClass: iModelClass;
@@ -60,17 +63,17 @@ function TModelCriarClass.CriarClass: iModelClass;
 
 begin
   Result := Self;
-  if Trim(FCaminho) = '' then
-    FCaminho := ExtractFilePath(ParamStr(0));
+  if Trim(FDirectory) = '' then
+    FDirectory := ExtractFilePath(ParamStr(0));
 
   try
-    if FileExists(FCaminho + FNomeUnit + '.pas') then
+    if FileExists(FDirectory + FNameUnit + '.pas') then
     begin
-      If MessageDlg('Você tem certeza que deseja substituir a Classe ' + FNomeUnit + '?',
+      If MessageDlg('Você tem certeza que deseja substituir a Classe ' + FNameUnit + '?',
         mtConfirmation, mbYesNo, 0) = idyes then
       begin
-        DeleteFile(FCaminho + FNomeUnit + '.pas');
-        AssignFile(FClass, FCaminho + FNomeUnit + '.pas');
+        DeleteFile(FDirectory + FNameUnit + '.pas');
+        AssignFile(FClass, FDirectory + FNameUnit + '.pas');
         Rewrite(FClass);
         MontarClass;
       end
@@ -79,7 +82,7 @@ begin
     end
     else
     begin
-      AssignFile(FClass, FCaminho + FNomeUnit + '.pas');
+      AssignFile(FClass, FDirectory + FNameUnit + '.pas');
       Rewrite(FClass);
       MontarClass;
     end;
@@ -87,7 +90,7 @@ begin
     CloseFile(FClass);
   except
     on Error: Exception do
-      raise Exception.Create('Error ao Gerarar o Arquivo ' + FNomeUnit + '.');
+      raise Exception.Create('Error ao Gerarar o Arquivo ' + FNameUnit + '.');
   end;
 end;
 
@@ -103,7 +106,7 @@ var
 begin
   Result := Self;
 
-  Writeln(FClass, 'unit ' + FNomeUnit + ';');
+  Writeln(FClass, 'unit ' + FNameUnit + ';');
   Writeln(FClass, '');
   Writeln(FClass, 'interface');
   Writeln(FClass, '');
@@ -111,7 +114,7 @@ begin
   Writeln(FClass, '  SimpleAttributes;');
   Writeln(FClass, '');
   Writeln(FClass, 'Type');
-  Writeln(FClass, '  ' + FNomeClass + ' = class');
+  Writeln(FClass, '  ' + FNameClass + ' = class');
   Writeln(FClass, '  private');
   Writeln(FClass, '    { Private declarations }');
 
@@ -149,64 +152,19 @@ begin
   Writeln(FClass, '');
   Writeln(FClass, 'implementation');
   Writeln(FClass, '');
-  Writeln(FClass, '{ ' + FNomeClass + ' }');
+  Writeln(FClass, '{ ' + FNameClass + ' }');
   Writeln(FClass, '');
 
   for i := 0 to pred(FProceduresImplementation.Count) do
   begin
     Writeln(FClass, FProceduresImplementation[i]);
   end;
-  // pronto ate aqui
-  Writeln(FClass, 'function TCAIXA.GetFDATAABERTURA: TDateTime;');
-  Writeln(FClass, 'begin');
-  Writeln(FClass, '');
-  Writeln(FClass, 'end;');
-  Writeln(FClass, '');
-  Writeln(FClass, 'function TCAIXA.GetFDATAALTERACAO: TDateTime;');
-  Writeln(FClass, 'begin');
-  Writeln(FClass, '');
-  Writeln(FClass, 'end;');
-  Writeln(FClass, '');
-  Writeln(FClass, 'function TCAIXA.GetFDATAFECHAMENTO: TDateTime;');
-  Writeln(FClass, 'begin');
-  Writeln(FClass, '');
-  Writeln(FClass, 'end;');
-  Writeln(FClass, '');
-  Writeln(FClass, 'function TCAIXA.GetFFISCAL_ABERTURA: String;');
-  Writeln(FClass, 'begin');
-  Writeln(FClass, '');
-  Writeln(FClass, 'end;');
-  Writeln(FClass, '');
-  Writeln(FClass, 'function TCAIXA.GetFFISCAL_FECHAMENTO: String;');
-  Writeln(FClass, 'begin');
-  Writeln(FClass, '');
-  Writeln(FClass, 'end;');
-  Writeln(FClass, '');
-  Writeln(FClass, 'function TCAIXA.GetFGUUID: String;');
-  Writeln(FClass, 'begin');
-  Writeln(FClass, '');
-  Writeln(FClass, 'end;');
-  Writeln(FClass, '');
-  Writeln(FClass, 'function TCAIXA.GetFOPERADOR: String;');
-  Writeln(FClass, 'begin');
-  Writeln(FClass, '');
-  Writeln(FClass, 'end;');
-  Writeln(FClass, '');
-  Writeln(FClass, 'function TCAIXA.GetFSTATUS: Integer;');
-  Writeln(FClass, 'begin');
-  Writeln(FClass, '');
-  Writeln(FClass, 'end;');
-  Writeln(FClass, '');
-  Writeln(FClass, 'function TCAIXA.GetFVALORABERTURA: Double;');
-  Writeln(FClass, 'begin');
-  Writeln(FClass, '');
-  Writeln(FClass, 'end;');
-  Writeln(FClass, '');
-  Writeln(FClass, 'function TCAIXA.GetFVALORFECHAMENTO: Double;');
-  Writeln(FClass, 'begin');
-  Writeln(FClass, '');
-  Writeln(FClass, 'end;');
-  Writeln(FClass, '');
+
+  for i := 0 to pred(FFunctionsImplementation.Count) do
+  begin
+    Writeln(FClass, FFunctionsImplementation[i]);
+  end;
+
   Writeln(FClass, 'end.');
 end;
 
@@ -221,11 +179,14 @@ var
 begin
   Result := Self;
 
+  aValue.NotNull := 'S';
+
   SeteProcedureDeclaration(aValue);
   SetProcedureImplementation(aValue);
 
   SeteFunctionDeclaration(aValue);
-  SetFunctionImplementation(aValue);
+  SetFunctionImplementationValidation(aValue);
+  // SetFunctionImplementation(aValue);
 
   AutoIncPK := aValue.PK;
 
@@ -255,7 +216,7 @@ function TModelCriarClass.SetProcedureImplementation(aValue: TProperty): iModelC
 begin
   Result := Self;
 
-  FProceduresImplementation.Add('procedure ' + FNomeClass + '.Set' + aValue.Nome + '(const Value: '
+  FProceduresImplementation.Add('procedure ' + FNameClass + '.Set' + aValue.Nome + '(const Value: '
     + aValue.Tipo + ');');
   FProceduresImplementation.Add('begin');
   FProceduresImplementation.Add('  F' + aValue.Nome + ' := Value;');
@@ -267,25 +228,61 @@ function TModelCriarClass.SeteFunctionDeclaration(aValue: TProperty): iModelClas
 begin
   Result := Self;
   FFunctionsDeclaration.Add('function GetF' + aValue.Nome + ': ' + aValue.Tipo + ';');
-  // function GetFDATAABERTURA: TDateTime;
 end;
 
 function TModelCriarClass.SetFunctionImplementation(aValue: TProperty): iModelClass;
 begin
-  hffjh
+  Result := Self;
+
+  FFunctionsImplementation.Add('function ' + FNameClass + '.GetF' + aValue.Nome + ': ' +
+    aValue.Tipo + ';');
+  FFunctionsImplementation.Add('begin');
+  FFunctionsImplementation.Add('  Result := F' + aValue.Nome + ';');
+  FFunctionsImplementation.Add('end;');
+  FFunctionsImplementation.Add('');
+end;
+
+function TModelCriarClass.SetFunctionImplementationValidation(aValue: TProperty): iModelClass;
+begin
+  Result := Self;
+
+  if aValue.NotNull = 'S' then
+  begin
+    FFunctionsImplementation.Add('function ' + FNameClass + '.GetF' + aValue.Nome + ': ' +
+      aValue.Tipo + ';');
+    FFunctionsImplementation.Add('begin');
+    FFunctionsImplementation.Add('  if aValue.Nome = ' + QuotedStr('') + ' then');
+    FFunctionsImplementation.Add('    raise ' + FNameValidation + '.Create(' + aValue.Nome + ',' +
+      QuotedStr('O campo ' + aValue.Nome + ' não pode ser vazio!') + ');');
+    FFunctionsImplementation.Add('');
+    FFunctionsImplementation.Add('  Result := F' + aValue.Nome + ';');
+    FFunctionsImplementation.Add('end;');
+    FFunctionsImplementation.Add('');
+  end
+  else
+    SetFunctionImplementation(aValue);
+end;
+
+function TModelCriarClass.SetNameValidation(aValue: String): iModelClass;
+begin
+  Result := Self;
+
+  FNameValidation := aValue;
+
+  if aValue = '' then
+    FNameValidation := 'TValidaCampo';
 end;
 
 function TModelCriarClass.SetNomeClass(aValue: String): iModelClass;
 begin
   Result := Self;
-  FNomeClass := 'T' + aValue;
+  FNameClass := 'T' + aValue;
 end;
 
 function TModelCriarClass.SetNomeUnit(aValue: String): iModelClass;
 begin
   Result := Self;
-  FNomeUnit := aValue;
-
+  FNameUnit := aValue;
 end;
 
 end.

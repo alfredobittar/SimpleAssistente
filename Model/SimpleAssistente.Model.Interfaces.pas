@@ -13,6 +13,7 @@ type
     ['{4A477652-432D-4399-AAF1-CDDB4E3B9D8F}']
     function SetNomeUnit(aValue: String): iModelClass;
     function SetNomeClass(aValue: String): iModelClass;
+    function SetNameValidation(aValue: String): iModelClass;
     function SetCampos(aValue: TProperty): iModelClass;
     function CriarClass: iModelClass;
     function MontarClass: iModelClass;
