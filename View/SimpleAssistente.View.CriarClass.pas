@@ -148,7 +148,7 @@ end;
 
 procedure TfrmPrincipal.SetList;
 begin
-  lstTables.AddItem();
+ // lstTables.AddItem();
 end;
 
 procedure TfrmPrincipal.SpeedButton1Click(Sender: TObject);

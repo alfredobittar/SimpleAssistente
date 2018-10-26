@@ -45,8 +45,8 @@ end;
 function TController.ListTable(aParent : TListBox) : iController;
 var s : string;
 begin
-    FModelBuscarDados.GetTable(s);
-    aParent. := s;
+   // FModelBuscarDados.GetTable(s);
+    //aParent. := s;
 end;
 
 class function TController.New: iController;

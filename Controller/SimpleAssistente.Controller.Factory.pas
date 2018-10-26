@@ -3,7 +3,7 @@ unit SimpleAssistente.Controller.Factory;
 interface
 
 uses
-  SimpleAssistente.Controller.Interfaces;
+  SimpleAssistente.Controller.Interfaces, SimpleAssistente.Model.Interfaces;
 
 type
   TControllerFactory = Class(TInterfacedObject, iControlerFactory)
@@ -13,7 +13,7 @@ type
     constructor Create;
     destructor Destroy; override;
 
-    function Controller: iControlerFactory;
+    function Controller: iController;
 
   End;
 
@@ -24,7 +24,7 @@ uses
 
 { TControllerFactory }
 
-function TControllerFactory.Controller: iControlerFactory;
+function TControllerFactory.Controller: iController;
 begin
   Result := TController.New;
 end;
