@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{446E031B-994D-45A4-BA28-EC621404330E}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="SimpleAssistente.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\SimpleORM\SimpleORM.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="SimpleAssistente">
+        <MSBuild Projects="SimpleAssistente.dproj"/>
+    </Target>
+    <Target Name="SimpleAssistente:Clean">
+        <MSBuild Projects="SimpleAssistente.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="SimpleAssistente:Make">
+        <MSBuild Projects="SimpleAssistente.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="SimpleORM">
+        <MSBuild Projects="..\SimpleORM\SimpleORM.dproj"/>
+    </Target>
+    <Target Name="SimpleORM:Clean">
+        <MSBuild Projects="..\SimpleORM\SimpleORM.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="SimpleORM:Make">
+        <MSBuild Projects="..\SimpleORM\SimpleORM.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="SimpleAssistente;SimpleORM"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="SimpleAssistente:Clean;SimpleORM:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="SimpleAssistente:Make;SimpleORM:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

@@ -108,6 +108,9 @@
         <DCCReference Include="Model\SimpleAssistente.Model.Interfaces.pas"/>
         <DCCReference Include="Model\SimpleAssistente.Model.Factory.pas"/>
         <DCCReference Include="Model\SimpleAssistente.Model.Types.pas"/>
+        <DCCReference Include="Controller\SimpleAssistente.Controller.Controller.pas"/>
+        <DCCReference Include="Controller\SimpleAssistente.Controller.Factory.pas"/>
+        <DCCReference Include="Controller\SimpleAssistente.Controller.Interfaces.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

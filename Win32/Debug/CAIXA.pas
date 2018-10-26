@@ -1,4 +1,4 @@
-unit Teste;
+unit CAIXA;
 
 interface
 
@@ -118,32 +118,23 @@ end;
 
 function TCAIXA.GetFFISCAL_FECHAMENTO: String;
 begin
-  if aValue.Nome = '' then
-    raise TValidaCampo.Create(FISCAL_FECHAMENTO,'O campo FISCAL_FECHAMENTO não pode ser vazio!');
-
   Result := FFISCAL_FECHAMENTO;
 end;
 
 function TCAIXA.GetFOPERADOR: String;
 begin
-  if aValue.Nome = '' then
-    raise TValidaCampo.Create(OPERADOR,'O campo OPERADOR não pode ser vazio!');
-
   Result := FOPERADOR;
 end;
 
 function TCAIXA.GetFVALORABERTURA: Double;
 begin
-  if aValue.Nome = '' then
-    raise TValidaCampo.Create(VALORABERTURA,'O campo VALORABERTURA não pode ser vazio!');
-
   Result := FVALORABERTURA;
 end;
 
 function TCAIXA.GetFDATAABERTURA: TDateTime;
 begin
   if aValue.Nome = '' then
-    raise TValidaCampo.Create(DATAABERTURA,'O campo DATAABERTURA não pode ser vazio!');
+    raise TValidaCampo.Create(DATAABERTURA, 'O campo DATAABERTURA não pode ser vazio!');
 
   Result := FDATAABERTURA;
 end;
@@ -151,48 +142,36 @@ end;
 function TCAIXA.GetFGUUID: String;
 begin
   if aValue.Nome = '' then
-    raise TValidaCampo.Create(GUUID,'O campo GUUID não pode ser vazio!');
+    raise TValidaCampo.Create(GUUID, 'O campo GUUID não pode ser vazio!');
 
   Result := FGUUID;
 end;
 
 function TCAIXA.GetFDATAALTERACAO: TDateTime;
 begin
-  if aValue.Nome = '' then
-    raise TValidaCampo.Create(DATAALTERACAO,'O campo DATAALTERACAO não pode ser vazio!');
-
   Result := FDATAALTERACAO;
 end;
 
 function TCAIXA.GetFFISCAL_ABERTURA: String;
 begin
-  if aValue.Nome = '' then
-    raise TValidaCampo.Create(FISCAL_ABERTURA,'O campo FISCAL_ABERTURA não pode ser vazio!');
-
   Result := FFISCAL_ABERTURA;
 end;
 
 function TCAIXA.GetFSTATUS: Integer;
 begin
   if aValue.Nome = '' then
-    raise TValidaCampo.Create(STATUS,'O campo STATUS não pode ser vazio!');
+    raise TValidaCampo.Create(STATUS, 'O campo STATUS não pode ser vazio!');
 
   Result := FSTATUS;
 end;
 
 function TCAIXA.GetFVALORFECHAMENTO: Double;
 begin
-  if aValue.Nome = '' then
-    raise TValidaCampo.Create(VALORFECHAMENTO,'O campo VALORFECHAMENTO não pode ser vazio!');
-
   Result := FVALORFECHAMENTO;
 end;
 
 function TCAIXA.GetFDATAFECHAMENTO: TDateTime;
 begin
-  if aValue.Nome = '' then
-    raise TValidaCampo.Create(DATAFECHAMENTO,'O campo DATAFECHAMENTO não pode ser vazio!');
-
   Result := FDATAFECHAMENTO;
 end;
 

@@ -20,26 +20,27 @@ type
     FFields: TDictionary<string, TProperty>;
     FTable: string;
     FCampo: TProperty;
-
     Flog: String;
     FEscrita: TMemo;
 
+    function exibiLog: iModelBuscarDados;
+    function BuscarPK(aTabela: String): iModelBuscarDados;
     function GetFieldType(pTipo: TFieldType): string;
+    function SetFields: iModelBuscarDados;
+    function SetPK: iModelBuscarDados;
+    function SetType: iModelBuscarDados;
+    function SetNotNull: iModelBuscarDados;
+
   public
     class function New: iModelBuscarDados;
     constructor Create;
     destructor Destroy; override;
 
     function BuscarCampo(aTabela: String): iModelBuscarDados;
-    function BuscarPK(aTabela: String): iModelBuscarDados;
+    function GetTable(var aValue: String): iModelBuscarDados;
+    function SetNomeUnit(aValue: String): iModelBuscarDados;
+    function SetNameValidation(aValue: String): iModelBuscarDados;
     function Log(aValue: TMemo): iModelBuscarDados;
-    function exibiLog: iModelBuscarDados;
-    function GetTable(aValue: TComboBox): iModelBuscarDados;
-
-    function SetFields: iModelBuscarDados;
-    function SetPK: iModelBuscarDados;
-    function SetType: iModelBuscarDados;
-
   end;
 
 implementation
@@ -56,15 +57,13 @@ begin
   Result := Self;
 
   FTable := aTabela;
-  /// ///////////////////////////////////////////////////////  isso não é aqui
-  FCriaClass.SetNomeUnit('Teste');
-  FCriaClass.SetNameValidation('');
 
   FCriaClass.SetNomeClass(FTable);
 
   SetFields;
   SetType;
   SetPK;
+  SetNotNull;
 
   for Campo in FFields.Values do
   begin
@@ -74,15 +73,27 @@ begin
   FCriaClass.CriarClass;
 end;
 
-function TModelBuscaDadosBanco.GetTable(aValue: TComboBox): iModelBuscarDados;
+function TModelBuscaDadosBanco.GetTable(var aValue: String): iModelBuscarDados;
+var
+  List: string;
 begin
+  Result := Self;
   with FMetaTables do
   begin
     Close();
     MetaInfoKind := TFDPhysMetaInfoKind(mkTables);
-    ObjectName := aValue.Text;
+    ObjectName := aValue;
     Open();
   end;
+
+  { with FMetaTables do
+    begin
+    Close();
+    MetaInfoKind := TFDPhysMetaInfoKind(mkTables);
+    ObjectName := aValue.Text;
+    Open();
+    end; }
+
 end;
 
 function TModelBuscaDadosBanco.Log(aValue: TMemo): iModelBuscarDados;
@@ -120,7 +131,7 @@ end;
 
 destructor TModelBuscaDadosBanco.Destroy;
 begin
-
+  FreeAndNil(FFields);
   inherited;
 end;
 
@@ -143,9 +154,47 @@ begin
   end;
 end;
 
+function TModelBuscaDadosBanco.SetNameValidation(aValue: String): iModelBuscarDados;
+begin
+  Result := Self;
+  FCriaClass.SetNameValidation(aValue);
+end;
+
+function TModelBuscaDadosBanco.SetNomeUnit(aValue: String): iModelBuscarDados;
+begin
+  Result := Self;
+  FCriaClass.SetNomeUnit(aValue);
+end;
+
+function TModelBuscaDadosBanco.SetNotNull: iModelBuscarDados;
+var
+  i: Integer;
+  Campo: String;
+begin
+  Result := Self;
+
+  with FQuery do
+  begin
+    Open('SELECT * FROM ' + FTable);
+    for i := 0 to Pred(FieldList.Count) do
+    begin
+      Campo := Trim(FieldList.Fields[i].FieldName);
+
+      if FFields.TryGetValue(Campo, FCampo) then
+      begin
+        FCampo.NotNull := '';
+        if FieldByName(FCampo.Nome).Required then
+        begin
+          FCampo.NotNull := 'S';
+          FFields.AddOrSetValue(FCampo.Nome, FCampo);
+        end;
+      end;
+    end;
+  end;
+end;
+
 function TModelBuscaDadosBanco.exibiLog: iModelBuscarDados;
 begin
-
   begin
     FEscrita.Lines.Add(Flog);
     Flog := '';
@@ -214,7 +263,7 @@ begin
       if FFields.TryGetValue(Campo, FCampo) then
       begin
         if FMetaTables.Locate('COLUMN_NAME', FCampo.Nome, [loCaseInsensitive]) then
-          FCampo.PK := 'PK';
+          FCampo.PK := 'S';
 
         FFields.AddOrSetValue(FCampo.Nome, FCampo);
 
