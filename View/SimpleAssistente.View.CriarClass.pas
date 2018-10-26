@@ -55,7 +55,6 @@ type
     SpeedButton1: TSpeedButton;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure boxInfoKindChange(Sender: TObject);
     procedure FieldsClick(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure lstTablesClick(Sender: TObject);
@@ -81,11 +80,6 @@ uses
 
 {$R *.dfm}
 
-procedure TfrmPrincipal.boxInfoKindChange(Sender: TObject);
-begin
-  FFactory.BuscaDadosBanco.GetTable(boxTables);
-end;
-
 procedure TfrmPrincipal.FieldsClick(Sender: TObject);
 var
   teste: string;
@@ -97,6 +91,7 @@ begin
   end
   else
     ShowMessage('Por favor! Escolha uma tabela.');
+
 end;
 
 function TfrmPrincipal.BuscarCampo: string;
@@ -148,14 +143,13 @@ end;
 
 procedure TfrmPrincipal.SetList;
 begin
- // lstTables.AddItem();
+  // lstTables.AddItem();
 end;
 
 procedure TfrmPrincipal.SpeedButton1Click(Sender: TObject);
 begin
-  FController.BuscarDados
-             .GetTable(boxTables);
- SetList;
+   FController.ListTable(lstTables);
+  // SetList;
 
   { with metaInfo do
     try

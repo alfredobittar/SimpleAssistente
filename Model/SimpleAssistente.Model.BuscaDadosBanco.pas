@@ -37,7 +37,7 @@ type
     destructor Destroy; override;
 
     function BuscarCampo(aTabela: String): iModelBuscarDados;
-    function GetTable(aValue: TComboBox): iModelBuscarDados;
+    function GetTable(var aLista: TList<string>): iModelBuscarDados;
     function SetNomeUnit(aValue: String): iModelBuscarDados;
     function SetNameValidation(aValue: String): iModelBuscarDados;
     function Log(aValue: TMemo): iModelBuscarDados;
@@ -73,14 +73,21 @@ begin
   FCriaClass.CriarClass;
 end;
 
-function TModelBuscaDadosBanco.GetTable(aValue: TComboBox): iModelBuscarDados;
+function TModelBuscaDadosBanco.GetTable(var aLista: TList<string>): iModelBuscarDados;
 begin
   with FMetaTables do
   begin
     Close();
     MetaInfoKind := TFDPhysMetaInfoKind(mkTables);
-    ObjectName := aValue.Text;
+    ObjectName := '';
     Open();
+
+    First;
+    while not Eof do
+    begin
+      aLista.Add((FieldByName('TABLE_NAME').AsString));
+      Next;
+    end;
   end;
 end;
 
@@ -113,6 +120,7 @@ begin
   FMetaTables := frmPrincipal.metaInfo;
   FMetaFields := frmPrincipal.MetaFields;
   FFields := TDictionary<string, TProperty>.Create;
+
   FQuery := frmPrincipal.FDQuery1;
   FCriaClass := TModelCriarClass.New;
 end;

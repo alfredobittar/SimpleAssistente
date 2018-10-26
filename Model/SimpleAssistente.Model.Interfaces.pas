@@ -30,7 +30,7 @@ type
     ['{4E1B6EE3-9ED8-40D7-A207-4CF32B216693}']
     function Log(aValue: TMemo): iModelBuscarDados;
     function BuscarCampo(aTabela: String): iModelBuscarDados;
-    function GetTable(aValue: TComboBox): iModelBuscarDados;
+    function GetTable(var aLista: TList<string>): iModelBuscarDados;
     function SetNomeUnit(aValue: String): iModelBuscarDados;
     function SetNameValidation(aValue: String): iModelBuscarDados;
     // virificar melhor forma de sair desta interface
@@ -39,7 +39,7 @@ type
 
   iController = interface
     ['{6C05C67B-8A38-4BBF-B27E-5F73B0607620}']
-    function BuscarDados: iModelBuscarDados;
+    function ListTable(aParent: TListBox): iController;
   end;
 
 implementation
